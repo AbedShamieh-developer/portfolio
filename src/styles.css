@@ -1,0 +1,363 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+/*
+ * Design system — "Obsidian Systems"
+ * Foundation: obsidian / graphite. Type: warm off-white.
+ * Accent: controlled electric cyan = data moving through systems.
+ * All colors oklch. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-sm: calc(var(--radius) - 3px);
+  --radius-md: calc(var(--radius) - 1px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 14px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* domain tokens */
+  --color-obsidian: var(--obsidian);
+  --color-graphite: var(--graphite);
+  --color-steel: var(--steel);
+  --color-steel-soft: var(--steel-soft);
+  --color-signal: var(--signal);
+  --color-signal-dim: var(--signal-dim);
+  --color-ember: var(--ember);
+
+  --ease-narrative: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-precise: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --obsidian: oklch(0.145 0.008 260);
+  --graphite: oklch(0.205 0.01 260);
+  --steel: oklch(0.42 0.014 255);
+  --steel-soft: oklch(0.62 0.012 255);
+  --signal: oklch(0.79 0.14 205);
+  --signal-dim: oklch(0.55 0.09 210);
+  --ember: oklch(0.78 0.13 62);
+
+  --background: oklch(0.145 0.008 260);
+  --foreground: oklch(0.955 0.006 85);
+  --card: oklch(0.185 0.009 260);
+  --card-foreground: oklch(0.955 0.006 85);
+  --popover: oklch(0.185 0.009 260);
+  --popover-foreground: oklch(0.955 0.006 85);
+  --primary: oklch(0.79 0.14 205);
+  --primary-foreground: oklch(0.16 0.01 250);
+  --secondary: oklch(0.24 0.011 260);
+  --secondary-foreground: oklch(0.955 0.006 85);
+  --muted: oklch(0.22 0.01 260);
+  --muted-foreground: oklch(0.68 0.012 255);
+  --accent: oklch(0.26 0.02 210);
+  --accent-foreground: oklch(0.955 0.006 85);
+  --destructive: oklch(0.62 0.2 25);
+  --destructive-foreground: oklch(0.97 0.005 85);
+  --border: oklch(0.99 0 0 / 9%);
+  --input: oklch(0.99 0 0 / 12%);
+  --ring: oklch(0.79 0.14 205 / 55%);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--signal) 30%, transparent);
+    color: var(--foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+}
+
+/* ---------- utilities ---------- */
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@utility hairline {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--signal) 45%, transparent),
+    transparent
+  );
+  height: 1px;
+}
+
+@utility surface {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--foreground) 4%, transparent),
+      transparent 40%
+    ),
+    var(--card);
+  border: 1px solid var(--border);
+}
+
+@utility grid-etch {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--foreground) 5%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--foreground) 5%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 48px 48px;
+}
+
+@utility text-signal-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--foreground) 30%,
+    color-mix(in oklab, var(--signal) 80%, var(--foreground))
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  font-size: clamp(2.75rem, 11vw, 10rem);
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  font-size: clamp(2rem, 5.4vw, 4.25rem);
+}
+
+@utility no-cursor {
+  cursor: none;
+}
+
+@keyframes pulse-node {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--signal) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+@utility node-pulse {
+  animation: pulse-node 1.1s var(--ease-narrative) 1;
+}
+
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+/*
+ * Long-running background motion lives in CSS, not JS: transform/opacity
+ * keyframes are composited, so they cost nothing on the main thread.
+ */
+@keyframes ambient-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(var(--dx, 0), var(--dy, 0), 0);
+    opacity: 0.45;
+  }
+}
+
+/* Project card: a request travelling the card's top edge, on hover only. */
+@keyframes edge-scan {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes flow-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+}
+
+/* ---------- intro loader gate ---------- */
+
+/*
+ * `data-intro` is written on <html> by a blocking inline script in <head>,
+ * before the first paint, and is then owned by the loader. It is the single
+ * source of truth for whether the portfolio is visible and interactive.
+ *
+ * States: pending -> ready -> revealing -> done, or skip (returning visitor).
+ *
+ * The loader defaults to display:none so that a visitor without JavaScript
+ * gets the portfolio directly and can never be trapped behind an overlay.
+ */
+#intro {
+  display: none;
+}
+
+html[data-intro="pending"] #intro,
+html[data-intro="ready"] #intro,
+html[data-intro="revealing"] #intro {
+  display: block;
+}
+
+html[data-intro="pending"],
+html[data-intro="ready"],
+html[data-intro="revealing"],
+html[data-intro="pending"] body,
+html[data-intro="ready"] body,
+html[data-intro="revealing"] body {
+  overflow: hidden;
+}
+
+/* Laid out (so the hero can be measured for the handoff) but not painted. */
+html[data-intro="pending"] #site,
+html[data-intro="ready"] #site {
+  opacity: 0;
+}
+
+html[data-intro="pending"] #site,
+html[data-intro="ready"] #site,
+html[data-intro="revealing"] #site {
+  pointer-events: none;
+}
+
+/*
+ * Returning visitor: no boot sequence, just a short settle.
+ * Opacity only — a transform here would turn #site into the containing block
+ * for every position:fixed child (nav, cursor, ambient layer).
+ */
+html[data-intro="skip"] #site {
+  animation: intro-settle 420ms var(--ease-narrative) both;
+}
+
+@keyframes intro-settle {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- cursor states during the intro ---------- */
+
+[data-cursor-ring] {
+  width: var(--ring-w, 30px);
+  height: var(--ring-h, 30px);
+}
+
+html[data-intro="pending"] [data-cursor-ring] {
+  width: 14px;
+  height: 14px;
+  opacity: 0.4;
+}
+
+/* SYSTEM READY: the ring opens, signalling an interactive page is arriving. */
+html[data-intro="ready"] [data-cursor-ring] {
+  width: 54px;
+  height: 54px;
+  opacity: 0.95;
+}
+
+html[data-intro="revealing"] [data-cursor-ring] {
+  width: 42px;
+  height: 42px;
+  opacity: 0.75;
+}
+
+html[data-intro="pending"] [data-cursor-label],
+html[data-intro="ready"] [data-cursor-label],
+html[data-intro="revealing"] [data-cursor-label] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
